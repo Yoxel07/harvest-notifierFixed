@@ -45,7 +45,7 @@
   "addons": [
     "deadmanssnitch:the-lone-snitch",
     "scheduler:standard",
-    "rollbar:free"
+    "rollbar:trial-5k"
   ],
   "buildpacks": [
     {
