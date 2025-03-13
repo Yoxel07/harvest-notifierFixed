@@ -5,7 +5,7 @@
 
 Slack Reminder is an integration between Harvest and Slack which automatically reminds users who forget to mark their working hours in Harvest.
 
-This is a Ruby 2.6.5 library for installation on Daily Heroku Scheduler.
+This is a Ruby 3.3.5 library for installation on Daily Heroku Scheduler.
 Notification is determined from Harvest API V2.
 
 ## Features
