@@ -109,9 +109,11 @@ module HarvestNotifier
     end
 
     def full_time_reported?(user)
-      time_reported?(user) && missing_hours_insignificant?(user)
+      time_reported?(user) && missing_hours_insignificant?(user) && !full_capacity_reported?(user)
     end
-
+    def full_capacity_reported?(user)
+      user["total_hours"] == user["weekly_capacity"]
+    end
     def without_weekly_capacity?(user)
       user["weekly_capacity"].zero?
     end
