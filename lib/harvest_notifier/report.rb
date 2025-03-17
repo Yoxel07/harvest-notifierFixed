@@ -32,7 +32,7 @@ module HarvestNotifier
       users = with_slack(with_reports(report))
 
       filter(users) do |user|
-        not_notifiable?(user) || user["missing_hours"] > 0
+        not_notifiable?(user) || full_time_reported?(user)
       end
     end
 
