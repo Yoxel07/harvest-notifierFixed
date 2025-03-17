@@ -117,7 +117,7 @@ module HarvestNotifier
     end
 
     def missing_hours_insignificant?(user)
-      user["missing_hours"] <= missing_hours_threshold
+      user["missing_hours"] >= missing_hours_threshold
     end
 
     def contractor?(user)
