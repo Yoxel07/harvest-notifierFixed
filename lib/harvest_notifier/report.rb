@@ -27,7 +27,7 @@ module HarvestNotifier
       end
     end
 
-    def weekly(from = Date.today.last_week, to = Date.today.last_week + 4)
+    def weekly(from = Date.today.last_week, to = Date.today.last_week + 6)
       report = harvest.time_report_list(from, to)
       users = with_slack(with_reports(report))
 
