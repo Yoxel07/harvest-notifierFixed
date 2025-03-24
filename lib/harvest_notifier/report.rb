@@ -36,10 +36,20 @@ module HarvestNotifier
       end
     end
 
+    def weekly(from = Date.today.last_week, to = Date.today.last_week + 4)
+      report = harvest.time_report_list(from, to)
+      users = with_slack(with_reports(report))
+
+      # Updated filtering logic to find users who haven't submitted timesheets
+      filter(users) do |user|
+        not_notifiable?(user) || timesheet_submitted?(user)
+      end
+    end
+    
     private
 
     def not_notifiable?(user)
-      inactive?(user) || contractor?(user) || without_weekly_capacity?(user) || whitelisted_user?(user)
+      inactive?(user) || without_weekly_capacity?(user) || whitelisted_user?(user)
     end
 
     def prepare_harvest_users(users)
@@ -111,7 +121,9 @@ module HarvestNotifier
     def full_time_reported?(user)
       time_reported?(user) && missing_hours_insignificant?(user)
     end
-
+     def timesheet_submitted?(user)
+      user["total_hours"].positive?
+    end
     def without_weekly_capacity?(user)
       user["weekly_capacity"].zero?
     end
