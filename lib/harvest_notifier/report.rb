@@ -33,7 +33,7 @@ module HarvestNotifier
 
       # Updated filtering logic to find users who haven't submitted timesheets
       filter(users) do |user|
-        not_notifiable?(user) || timesheet_submitted?(user) || started_this_week?(user, start_of_current_week)
+        not_notifiable?(user) || timesheet_unsubmitted?(user)
       end
     end
     
@@ -61,10 +61,6 @@ module HarvestNotifier
           "total_hours" => 0
         }
       )
-    end
-    def started_this_week?(user, start_of_current_week)
-      user_created_at = Date.parse(user["created_at"]) # Assuming 'created_at' is a string, convert to Date
-      user_created_at >= start_of_current_week
     end
     def prepare_slack_users(users)
       users["members"]
@@ -117,6 +113,9 @@ module HarvestNotifier
     end
      def timesheet_submitted?(user)
       user["total_hours"].positive?
+    end
+    def timesheet_unsubmitted?(user)
+    user["timesheet_status"] == "unsubmitted"
     end
     def without_weekly_capacity?(user)
       user["weekly_capacity"].zero?
