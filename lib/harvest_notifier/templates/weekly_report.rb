@@ -87,15 +87,9 @@ module HarvestNotifier
 
       def users_list
         round_hours(assigns[:users])
-          .select { |u| timesheet_unsubmitted?(u) } # Only include unsubmitted timesheets
           .map { |u| u[:slack_id].present? ? format(SLACK_ID_ITEM, u) : format(FULL_NAME_ITEM, u) }
           .join("\n")
       end
-       # Check if the user has not submitted their timesheet
-      def timesheet_unsubmitted?(user)
-        user[:timesheet_status] != "submitted" # Adjust this based on how your data is structured
-      end
-
       def round_hours(users)
         users.each do |u|
           u[:missing_hours] = u[:missing_hours].round(2)
