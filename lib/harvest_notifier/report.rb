@@ -115,7 +115,7 @@ module HarvestNotifier
       user["total_hours"].positive?
     end
     def timesheet_unsubmitted?(user)
-    user["timesheet_status"] == "submitted"
+    user["is_locked"] == "true"
     end
     def without_weekly_capacity?(user)
       user["weekly_capacity"].zero?
